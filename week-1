@@ -1,0 +1,68 @@
+from operator import attrgetter
+
+class Calisan():    
+    calisanlar = []
+    def __init__(self,isim,soyisim,yas,mail,maas):
+        self.isim = isim
+        self.soyisim = soyisim
+        self.yas = yas
+        self.mail = mail
+        self.maas = maas
+        Calisan.calisanlar.append(self)
+
+
+    def zam_isi(yuzde):
+        maaslar=0
+        for i in Calisan.calisanlar:
+            maaslar+=i.maas
+            i.maas=i.maas*((100+yuzde)/100)
+
+        print('''Calisanlarimiza %{} oraninda zam yapmis bulunmaktayiz.
+Toplam zam maliyeti {} TL'dir.'''.format(yuzde,maaslar*(yuzde/100)))
+
+    def siralama(deger):
+        #siralama icin attrgetter modulu kullanildi.
+        #class ozelliklerine gore secilip siralama yapilabilir
+        
+        Calisan.calisanlar.sort(key=attrgetter(deger))
+              
+calisan1=Calisan('emine','yildirim',27,'asd',1000)
+calisan2=Calisan('yavuz','yildirim',22,'wer',2000)
+calisan3=Calisan('haluk','yildirim',19,'ert',1500)
+calisan4=Calisan('elif','kelpetin',29,'fgh',3000)
+calisan5=Calisan('seyda','acar',26,'fgh',2000)
+
+Calisan.siralama('isim')
+print('ISME GORE SIRALAMA')
+for i in Calisan.calisanlar: 
+    print(i.isim ," : ", i.maas)
+print('''
+__________________________________________________________________________
+''')
+
+Calisan.siralama('soyisim')
+print('SOYISME GORE SIRALAMA')
+for i in Calisan.calisanlar: 
+    print(i.soyisim ," : ", i.isim)
+print('''
+__________________________________________________________________________
+''')
+
+Calisan.siralama('yas')
+print('YASA GORE SIRALAMA')
+for i in Calisan.calisanlar: 
+    print(i.yas ," : ", i.isim,'',i.soyisim)
+print('''
+__________________________________________________________________________
+''')
+
+Calisan.siralama('maas')
+print('MAASA GORE SIRALAMA')
+for i in Calisan.calisanlar: 
+    print(i.maas ," : ", i.isim,'',i.soyisim)
+print('''
+__________________________________________________________________________
+''')
+
+Calisan.zam_isi(10)
+
